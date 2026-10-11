@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portal de gestión de vehículos de AutoMax.">
+  <title>AutoMax | Gestión de vehículos</title>
+  <link rel="stylesheet" href="CSS/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#inicio" aria-label="AutoMax, inicio">
+        <img src="images/logo.svg" alt="" class="brand-logo">
+        <span class="brand-name">Auto<span>Max</span></span>
+      </a>
+      <nav class="main-nav" aria-label="Navegación principal">
+        <a class="nav-link active" href="#inicio">Inicio</a>
+        <a class="nav-link" href="#catalogo">Catálogo</a>
+        <a class="nav-link" href="#vehiculos">Inventario</a>
+        <a class="nav-link" href="#registro">Registrar vehículo</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inicio" class="page-container">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">SISTEMA DE INVENTARIO</p>
+        <h1>Administra tu inventario <span>de vehículos</span></h1>
+        <p class="hero-description">Registra, consulta y organiza los vehículos de tu agencia desde un solo lugar.</p>
+        <a class="button button-primary hero-button" href="#registro">+ Registrar vehículo</a>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="art-glow"></div>
+        <img src="images/logo.svg" alt="" class="hero-logo">
+        <div class="art-caption"><span class="status-dot"></span> Panel de AutoMax</div>
+      </div>
+    </section>
+
+    <section id="registro" class="panel form-panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">INVENTARIO</p>
+          <h2>Datos del vehículo</h2>
+          <p class="section-subtitle">Completa todos los campos para registrar el vehículo.</p>
+        </div>
+        <span class="section-icon" aria-hidden="true">＋</span>
+      </div>
+
+      <!-- Formulario conectado con JavaScript y LocalStorage. -->
+      <form id="vehicle-form" autocomplete="off">
+        <input type="hidden" id="vehicle-id" name="vehicleId">
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="codigo">Código del vehículo <span>*</span></label>
+            <input type="text" id="codigo" name="codigo" placeholder="Ej. AM-001" required>
+          </div>
+          <div class="form-field">
+            <label for="marca">Marca <span>*</span></label>
+            <input type="text" id="marca" name="marca" placeholder="Ej. Toyota" required>
+          </div>
+          <div class="form-field">
+            <label for="modelo">Modelo <span>*</span></label>
+            <input type="text" id="modelo" name="modelo" placeholder="Ej. Corolla" required>
+          </div>
+          <div class="form-field">
+            <label for="anio">Año <span>*</span></label>
+            <input type="number" id="anio" name="anio" placeholder="Ej. 2026" min="1886" step="1" required>
+          </div>
+          <div class="form-field">
+            <label for="color">Color <span>*</span></label>
+            <input type="text" id="color" name="color" placeholder="Ej. Gris" required>
+          </div>
+          <div class="form-field">
+            <label for="precio">Precio (RD$) <span>*</span></label>
+            <input type="number" id="precio" name="precio" placeholder="Ej. 1250000" min="0.01" step="0.01" required>
+          </div>
+          <div class="form-field">
+            <label for="cantidad">Cantidad disponible <span>*</span></label>
+            <input type="number" id="cantidad" name="cantidad" placeholder="Ej. 3" min="0" step="1" required>
+          </div>
+          <div class="form-field">
+            <label for="combustible">Tipo de combustible <span>*</span></label>
+            <select id="combustible" name="combustible" required>
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option value="Gasolina">Gasolina</option>
+              <option value="Gasoil">Gasoil</option>
+              <option value="Híbrido">Híbrido</option>
+              <option value="Eléctrico">Eléctrico</option>
+              <option value="GLP">GLP</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="transmision">Transmisión <span>*</span></label>
+            <select id="transmision" name="transmision" required>
+              <option value="" disabled selected>Selecciona una opción</option>
+              <option value="Automática">Automática</option>
+              <option value="Manual">Manual</option>
+              <option value="CVT">CVT</option>
+            </select>
+          </div>
+          <div class="form-field form-field-full image-upload-field">
+            <label for="imagen-url">Imagen del vehículo por URL (opcional)</label>
+            <input type="url" id="imagen-url" name="imagenUrl" placeholder="https://sitio.com/imagen-del-vehiculo.jpg" autocomplete="url">
+            <small>Pega un enlace directo a una imagen pública que termine, normalmente, en .jpg, .png o .webp.</small>
+            <label for="imagen">O selecciona una imagen desde tu computadora</label>
+            <input type="file" id="imagen" name="imagen" accept="image/*">
+            <small>Para archivos locales, utiliza imágenes de hasta 1 MB. Si completas la URL, se usará esa imagen en lugar del archivo.</small>
+            <div class="image-preview-wrap" id="image-preview-wrap" hidden>
+              <img id="image-preview" alt="Vista previa de la imagen del vehículo">
+              <button type="button" id="remove-image" class="button button-secondary button-small">Quitar imagen</button>
+            </div>
+          </div>
+          <div class="form-field form-field-full">
+            <label for="descripcion">Descripción <span>*</span></label>
+            <textarea id="descripcion" name="descripcion" rows="3" maxlength="500" placeholder="Describe las características principales del vehículo" required></textarea>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <p class="required-note"><span>*</span> Campos obligatorios</p>
+          <div class="button-group">
+            <button type="reset" id="btn-limpiar" class="button button-secondary">Limpiar</button>
+            <button type="submit" id="btn-registrar" class="button button-primary">Registrar vehículo</button>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <section id="catalogo" class="panel catalog-panel">
+      <div class="section-heading inventory-heading">
+        <div>
+          <p class="eyebrow">AUTOMAX SHOWROOM</p>
+          <h2>Catálogo de vehículos</h2>
+          <p class="section-subtitle">Explora los vehículos registrados con sus fotografías, precios y disponibilidad.</p>
+        </div>
+        <div class="inventory-count"><span class="count-dot"></span><span id="catalog-count">0 disponibles</span></div>
+      </div>
+      <div id="vehicle-catalog" class="vehicle-catalog">
+        <div class="catalog-empty">
+          <strong>Tu catálogo está esperando vehículos</strong>
+          <span>Registra un vehículo y agrega una fotografía para mostrarlo aquí.</span>
+          <a href="#registro" class="button button-primary">Agregar vehículo</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="vehiculos" class="panel inventory-panel">
+      <div class="section-heading inventory-heading">
+        <div>
+          <p class="eyebrow">CONTROL DE EXISTENCIAS</p>
+          <h2>Vehículos registrados</h2>
+          <p class="section-subtitle">Consulta, busca, edita o elimina los vehículos de tu inventario.</p>
+        </div>
+        <div class="inventory-count"><span class="count-dot"></span><span id="vehicle-count">0 vehículos</span></div>
+      </div>
+
+      <div class="table-toolbar">
+        <div class="search-box">
+          <span aria-hidden="true">⌕</span>
+          <input type="search" id="buscar-vehiculo" placeholder="Buscar por código, marca o modelo..." aria-label="Buscar vehículos">
+        </div>
+        <span class="table-hint">Inventario de AutoMax</span>
+      </div>
+
+      <div class="table-wrapper">
+        <table id="vehicle-table">
+          <thead>
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Marca</th>
+              <th scope="col">Modelo</th>
+              <th scope="col">Año</th>
+              <th scope="col">Color</th>
+              <th scope="col">Combustible</th>
+              <th scope="col">Precio</th>
+              <th scope="col">Cantidad</th>
+              <th scope="col">Descripción</th>
+              <th scope="col">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="vehicle-list">
+            <tr id="empty-state">
+              <td colspan="10">
+                <div class="empty-state">
+                  <span class="empty-icon" aria-hidden="true">▤</span>
+                  <strong>Aún no hay vehículos registrados</strong>
+                  <span>Completa el formulario para comenzar a llenar tu inventario.</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-footer">Los datos se guardan en este navegador mediante LocalStorage.</p>
+    </section>
+
+    <footer class="site-footer">
+      <span>© <span id="footer-year">2026</span> AutoMax</span>
+      <span>Portal de gestión de vehículos</span>
+    </footer>
+  </main>
+
+  <script src="JS/app.js" defer></script>
+</body>
+</html>
