@@ -1,4 +1,13 @@
+#Proyecto desarrollado por:
+
+#Yuhanly Mejia Acevedo 2024-0722
+
+#Ambar Sepulveda Hernandez 2024-0607
+
+
+
 # AutoMax - Portal de gestión de vehículos
+
 
 Aplicación web desarrollada con HTML5, CSS3 y JavaScript puro. Guarda los registros en `localStorage` del navegador; no utiliza frameworks ni bases de datos externas.
 
